@@ -1,6 +1,8 @@
 import React, {  Component }  from 'react'
 import { OneUserBoard } from './OneUserBoard'
 import socketIOClient from "socket.io-client";
+
+const socketUrl = "http://172.23.238.192:4001"
 export class CurrentPlayerView extends Component{
   constructor(props){
     super(props)
@@ -62,16 +64,34 @@ export class CurrentPlayerView extends Component{
     this.state={
       originalBatlleShipState : myBattleshipBoardState,
       hitMissArray  : oldArray,
-      //endpoint: "http://172.23.238.192:4001"
-      endpoint : "http://192.168.0.170:4001"
+      socket : null,
+      endpoint: "http://172.23.238.192:4001"
+      //endpoint : "http://192.168.0.170:4001"
     }
     //this.props.myBattleshipBoardState = myBattleshipBoardState;
   }
    send = () => {
+    //const socket = socketIOClient(this.state.endpoint);
+    this.state.socket.emit('user1BoardChange', this.state.hitMissArray) // change 'red' to this.state.color
+  }
+  componentWillMount(){
+    this.initSocket()
     const socket = socketIOClient(this.state.endpoint);
-    socket.emit('user1BoardChange', this.state.hitMissArray) // change 'red' to this.state.color
+    socket.on('user1BoardChange', (userBoard) => {
+      //document.body.style.backgroundColor = col
+      this.setState({
+        hitMissArray : userBoard
+      })
+    })
   }
 
+  initSocket = ()=>{
+    const socket = socketIOClient(socketUrl)
+    socket.on('connect' , ()=>{
+      console.log("connected")
+    })
+    this.setState({socket})
+  }
 
   changeHitMissArray(i, j){
     if(this.state.originalBatlleShipState[i][j] ==1){
@@ -88,13 +108,7 @@ export class CurrentPlayerView extends Component{
 
 
   render(){
-    const socket = socketIOClient(this.state.endpoint);
-    socket.on('user1BoardChange', (userBoard) => {
-      //document.body.style.backgroundColor = col
-      this.setState({
-        hitMissArray : userBoard
-      })
-    })
+    
     return(
     <div>
         <p>Will showcase our ship loactions</p>
