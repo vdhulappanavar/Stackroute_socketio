@@ -111,10 +111,10 @@ export class CurrentPlayerView extends Component{
     
     return(
     <div>
-        <p>Will showcase our ship loactions</p>
+        {/* <p>Will showcase our ship loactions</p> */}
         <OneUserBoard changeHitMissArray= {this.changeHitMissArray} shipLocs = {this.state.originalBatlleShipState} arrayToDrawBoard={this.state.hitMissArray}/>
-        <p>and other users hit and miss count</p>
-        <p>Generate ship positions</p>
+        {/* <p>and other users hit and miss count</p>
+        <p>Generate ship positions</p> */}
     </div>
     )
   } 

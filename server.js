@@ -6,7 +6,10 @@ const socketIO = require('socket.io')
 const port = 4001
 
 const app = express()
-
+app.get('/api/hello', (req, res) => {
+  res.send({ express: 'Hello From Express' });
+});
+// app.listen(4001, () => console.log(`Listening on port 4001`));
 // our server instance
 const server = http.createServer(app)
 

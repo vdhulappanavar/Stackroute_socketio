@@ -1,55 +1,41 @@
 import React, { Component } from "react";
 import socketIOClient from "socket.io-client";
+import { Switch, Route,Link } from 'react-router-dom'
 import {  BattleShipComponent } from './BattleShipComponent'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import { AppBar, FlatButton } from  'material-ui';
+import {HomeComponent} from './HomeComponent'
+import {RulesComponent} from './RulesComponent'
+import {PlayGameComponent} from './PlayGameComponent'
 
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      endpoint: "http://172.23.238.192:4001",
-      
-      ///
-      color: 'white'
-      ///
-      
-    };
-  }
-
-  // sending sockets
-  // send = () => {
-  //   const socket = socketIOClient(this.state.endpoint);
-  //   socket.emit('change color', this.state.color) // change 'red' to this.state.color
-  // }
-
-  ///
-  
-  // adding the function
-  // setColor = (color) => {
-  //   this.setState({ color })
-  // }
-  
-  ///
-
+class App extends Component {  
   render() {
-    // testing for socket connections
-
-    const socket = socketIOClient(this.state.endpoint);
-    socket.on('change color', (col) => {
-      document.body.style.backgroundColor = col
-    })
-
+    const rightButtons = (
+      <div>
+        <FlatButton><Link to='/'>Home</Link></FlatButton>
+        <FlatButton><Link to='/Rules'>Rules</Link></FlatButton>
+        <FlatButton><Link to='/play'>Play</Link></FlatButton>
+      </div>
+    );
     return (
       <div style={{ textAlign: "center" }}>
-        {/* <button onClick={() => this.send() }>Change Color</button> */}
-
-
-        
-
-        {/* // adding the two buttons, also, remove all of the comments in the JSX section. */}
-        {/* <button id="blue" onClick={() => this.setColor('blue')}>Blue</button>
-        <button id="red" onClick={() => this.setColor('red')}>Red</button> */}
         <div className="App">
-          <BattleShipComponent />
+        <MuiThemeProvider>
+        <AppBar
+          title="Title"
+          iconElementRight={rightButtons} 
+        />
+       </MuiThemeProvider>
+        
+          <main>
+            <Switch>
+              <Route exact path='/' component={HomeComponent}/>
+              <Route exact path='/Rules' component={RulesComponent}/>
+              <Route exact path='/user1' component={BattleShipComponent}/>
+              <Route exact path='/user2' component={BattleShipComponent}/>
+              <Route exact path='/play' component={PlayGameComponent}/>
+            </Switch>
+          </main>
       </div>
 
       </div>

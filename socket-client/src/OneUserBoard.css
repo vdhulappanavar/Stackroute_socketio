@@ -32,6 +32,14 @@ ol, ul {
   width: 34px;
 }
 
+.gameContainer{
+  display : flex;
+  justify-content: space-around;
+  padding : 20px;
+
+  
+}
+
 .ocean{
   /* background: blue */
   background: #35aadc

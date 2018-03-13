@@ -28,6 +28,35 @@ function Square(props) {
 }
 
 export class OneUserBoard extends React.Component {
+  state = {
+    response: ''
+  };
+
+  componentDidMount() {
+    console.log("in componentdidmount")
+    this.callApi()
+      .then(res => {console.log(res); this.setState({ response: res.express })})
+      .catch(err => console.log(err));
+  }
+
+  callApi = async () => {
+    console.log("in callApi")
+    // const response = await fetch('/api/hello');
+    // const body = await response.json();
+    // console.log(response.status)
+    // console.log(body)
+    // if (response.status !== 200) throw Error(body.message);
+    // fetch('/api/hello')
+    // .then(res => {console.log("in res of fetch"); console.log(res);})
+    // return {"express":"something"};
+    const response = await fetch('/api/hello');
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +135,9 @@ export class OneUserBoard extends React.Component {
       shipLocGrid=`HEY`
     }
     return(
-      <div>
+      <div >
+        {this.state.response}
+        <div className="gameContainer">
         <div>
           {/* {list}       */}
           <div className="board-row">
@@ -230,9 +261,11 @@ export class OneUserBoard extends React.Component {
             {this.renderSquare(9, 9)}
           </div>
         </div>
+        </div>
         <button onClick = {this.changeSetShipLocSate}> Set My own Positions</button>
         {shipLocGrid}
         </div>
+
     )
   }
 }
