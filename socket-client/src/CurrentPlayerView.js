@@ -65,8 +65,8 @@ export class CurrentPlayerView extends Component{
       originalBatlleShipState : myBattleshipBoardState,
       hitMissArray  : oldArray,
       socket : null,
-      endpoint: "http://172.23.238.192:4001"
-      //endpoint : "http://192.168.0.170:4001"
+      //endpoint: "http://172.23.238.192:4001"
+      //zendpoint : "http://192.168.0.170:4001"
     }
     //this.props.myBattleshipBoardState = myBattleshipBoardState;
   }
@@ -93,15 +93,22 @@ export class CurrentPlayerView extends Component{
     this.setState({socket})
   }
 
-  changeHitMissArray(i, j){
-    if(this.state.originalBatlleShipState[i][j] ==1){
-      console.log("ship there")
-      //let temp = this.state.changeHitMissArray
+  changeHitMissArray(i, j, hitmiss){
+    // if(this.state.originalBatlleShipState[i][j] ==1){
+    //   console.log("ship there")
+    //   //let temp = this.state.changeHitMissArray
+    //   this.state.hitMissArray[i][j] = 1
+    // }
+    // else{
+    //   this.state.hitMissArray[i][j] = -1 
+    // }
+    if(hitmiss){
       this.state.hitMissArray[i][j] = 1
     }
     else{
       this.state.hitMissArray[i][j] = -1 
     }
+
     this.forceUpdate()
     this.send()
   }

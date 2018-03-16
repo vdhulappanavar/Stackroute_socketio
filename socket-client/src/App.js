@@ -22,7 +22,7 @@ class App extends Component {
         <div className="App">
         <MuiThemeProvider>
         <AppBar
-          title="Title"
+          title="BattleShip"
           iconElementRight={rightButtons} 
         />
        </MuiThemeProvider>

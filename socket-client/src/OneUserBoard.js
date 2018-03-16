@@ -57,6 +57,17 @@ export class OneUserBoard extends React.Component {
     return body;
   };
 
+  callApiHitMiss = async (i, j) => {
+    console.log("in callApi")
+    
+    const response = await fetch(`/api/getPlayer1HitMiss/${i}/${j}`);
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +84,12 @@ export class OneUserBoard extends React.Component {
   }
 
   handleClick(i, j) {
-    this.props.changeHitMissArray(i, j)
+    this.props.changeHitMissArray(i, j) 
+    console.log("in componentdidmount")
+    this.callApiHitMiss(i, j)
+      .then(res => {console.log(res);})
+      .catch(err => console.log(err));
+    
   }
 
   renderSquare(i, j) {
